@@ -1,0 +1,5 @@
+# AWS Lambda function to start/stop EC2 instances 
+
+This is an AWS lambda function that is invoked by CloudWatch. It's purpose is to start and stop a pair of EC2 instances. One of the instances is web accessible and is available within a U.S. Central time business day window. We configured CloudWatch to fire the event twice and the function figures out whether it is standard time or daylight savings time so the server window would be consistent.
+
+The function also starts a Windows EC2 job server which is configured via the Windows job scheduler to run a daily processing stream. And, the function has a "stop all servers" capability which we wired into CloudWatch to ensure that if there was a hung job stream the job server would be shut off anyway. It is fired outside of the normal job window and shuts off the job server if it is still running.
